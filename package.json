@@ -1,0 +1,29 @@
+{
+  "name": "sorfe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rxst/sorfe.git"
+  },
+  "keywords": [],
+  "author": "d.samborskyi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rxst/sorfe/issues"
+  },
+  "homepage": "https://github.com/rxst/sorfe#readme",
+  "dependencies": {
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
+    "electron": "^9.1.0",
+    "typescript": "^3.9.6"
+  },
+  "files": [
+    "./lib/"
+  ]
+}
