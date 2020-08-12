@@ -1,6 +1,6 @@
 {
   "name": "sorfe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -18,10 +18,16 @@
   },
   "homepage": "https://github.com/rxst/sorfe#readme",
   "dependencies": {
+    "@types/uuid": "^8.3.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "electron": "^9.1.0",
-    "typescript": "^3.9.6"
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^3.9.6",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.23"
   },
   "files": [
     "./lib/"

@@ -9,13 +9,15 @@
     "experimentalDecorators": true,
     "moduleResolution": "Node",
     "target": "ES5",
-    "outDir": "./lib"
+    "outDir": "./lib",
+    "declaration": true,
+    "lib": ["ES6", "dom"]
   },
   "include": [
     "source/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "lib"
   ]
 }
