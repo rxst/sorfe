@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/rxst/sorfe.git"
   },
-  "keywords": [],
+  "keywords": ["electron", "IPC", "API", "sorfe"],
   "author": "d.samborskyi",
   "license": "ISC",
   "bugs": {
