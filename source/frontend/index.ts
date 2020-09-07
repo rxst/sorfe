@@ -1,5 +1,5 @@
-import { IPCValidator } from './validators/validator.service';
-import { IJsonRpcResponseReject, IJsonRpcResponseSuccess } from './interfaces/ipc.interfaces';
+import { IPCValidator } from '../validators/validator.service';
+import { IJsonRpcResponseReject, IJsonRpcResponseSuccess } from '../interfaces/ipc.interfaces';
 import { v4 as uuidv4 } from 'uuid';
 
 interface IpcRenderer extends NodeJS.EventEmitter {

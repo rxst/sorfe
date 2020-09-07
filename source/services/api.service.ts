@@ -1,13 +1,18 @@
-import { EndPointService } from './end.point.service';
 import { IpcService } from './ipc.service';
 
-export type CommonClass<Result extends object = object> = new (...params: any[]) => Result;
+interface ICommonClass {
+    [key: string]: any;
+
+    '__proto__': any,
+    prototype: any
+}
+
+export type CommonClass<T extends ICommonClass> = new (...args: any[]) => T;
 
 export class EndPointAPI {
     private static instance: EndPointAPI;
-    private services: Map<string, string[]> = new Map<string, string[]>();
-    private endpoints: Map<string, EndPointService> = new Map<string, EndPointService>();
-    private callList: Map<string, (isError: boolean, data: any) => void> = new Map<string, (isError: boolean, data: any) => void>();
+    private services: Map<string, Map<string, string>> = new Map<string, Map<string, string>>();
+    private endpoints: Map<string, ICommonClass> = new Map<string, ICommonClass>();
     private ipcService: IpcService;
 
     private constructor(private readonly channel: string = 'serfe') {
@@ -21,29 +26,38 @@ export class EndPointAPI {
             .catch(err => send(err))
     }
 
+    private mapEndPointMethods<T extends ICommonClass>(inputClass: T): { originalName: string, endPointName: string }[] {
+        const methods = Object.keys(inputClass.__proto__).map(key => ({key, value: inputClass.__proto__[key]}));
+        const endPointMethods = methods.filter(method => method.value && method.value.prototype && method.value.prototype.isSorfeEndPoint);
+        return endPointMethods.map(method => ({
+            originalName: method.key,
+            endPointName: method.value.prototype.sorfeSorfeEndPointName
+        }));
+    }
+
     /**
      * SetEndPoints - clear previous services list and create new
-     * @param endpoints<CommonClass[]> - not initialize d class
+     * @param endpoints<CommonClass[]> - not initialized class
      */
 
-    public setEndPoints(endpoints: CommonClass[]) {
+    public setEndPoints(endpoints: CommonClass<any>[]) {
 
         this.services.clear();
 
         endpoints
-            .map(CClass => {
-                const IClass = new CClass();
-
-                if (IClass instanceof EndPointService) {
-                    this.services.set(IClass.name, IClass.methods);
-
-                    return IClass
+            .map(CClass => new CClass())
+            .forEach((endPoint: ICommonClass) => {
+                const proto = endPoint.__proto__;
+                if (proto.isSorfeEndPoint && proto.sorfeEndPointName) {
+                    const EPMethods = this.mapEndPointMethods(endPoint)
+                    this.services.set(
+                        proto.sorfeEndPointName,
+                        new Map(EPMethods.map(method => [method.endPointName, method.originalName]))
+                    );
+                    this.endpoints.set(proto.sorfeEndPointName, endPoint);
                 } else {
-                    throw new Error(`Class is not instance of EndPointService`);
+                    throw Error(`EndPointAPI can\`t  work with not decorated class`);
                 }
-            })
-            .forEach(endPoint => {
-                this.endpoints.set(endPoint.name, endPoint);
             })
 
     }
@@ -56,7 +70,7 @@ export class EndPointAPI {
         return EndPointAPI.instance;
     }
 
-    public static start(endpoints: CommonClass[], channel?: string): EndPointAPI {
+    public static start(endpoints: CommonClass<any>[], channel?: string): EndPointAPI {
         const api = EndPointAPI.getInstance(channel);
 
         api.setEndPoints(endpoints);
@@ -64,39 +78,17 @@ export class EndPointAPI {
         return api;
     }
 
-    public returnResult(callId: string, data: any) {
-        const callback = this.callList.get(callId);
-
-        if (data instanceof Promise) {
-            data
-                .then(res => {
-                    callback(false, res)
-                    this.callList.delete(callId);
-                })
-                .catch(e => {
-                    callback(true, e)
-                    this.callList.delete(callId);
-                });
-        } else {
-            callback(false, data);
-        }
-    }
-
-
     public call(id: string, callStr: string, param: any): Promise<any> {
         const serviceName = callStr.slice(0, callStr.indexOf(':'));
         const methodName = callStr.slice(callStr.indexOf(':') + 1);
         const serviceMap = this.services.get(serviceName);
-        if (!!serviceMap && serviceMap.indexOf(methodName) !== -1) {
+        const originalMethodName = serviceMap.get(methodName);
+        if (!!serviceMap && !!originalMethodName) {
             try {
-                return new Promise((resolve, reject) => {
+                return new Promise(resolve => {
                     const calledService = this.endpoints.get(serviceName);
-
-                    this.callList.set(id, (isError: boolean, data: any) => {
-                        isError ? reject(data) : resolve(data);
-                    });
-
-                    calledService.emit(methodName, {id: id}, ...param);
+                    const calledMethod = calledService.__proto__[originalMethodName];
+                    resolve(calledMethod.apply(calledService, ...param));
                 })
             } catch (e) {
                 return Promise.reject(e);

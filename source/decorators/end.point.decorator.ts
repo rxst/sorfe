@@ -1,4 +1,4 @@
-import { EndPointService } from '../services/end.point.service';
+import { EventEmitter } from "events";
 
 export interface IEndPointOptions {
     name: string;
@@ -6,22 +6,12 @@ export interface IEndPointOptions {
 
 export function EndPoint(options: IEndPointOptions) {
     return function (target: any): any | void {
-        if (target.prototype instanceof EndPointService) {
-            const original = target;
 
-            const targetWrapperFunction = function (...args: any[]) {
-                const endPointService = new target(...args);
+        if (target.prototype instanceof EventEmitter) throw Error('EndPoint decorator can`t work with Event Emitter class');
 
-                endPointService.__initService(options);
+        target.prototype.isSorfeEndPoint = true;
+        target.prototype.sorfeEndPointName = options.name;
 
-                return endPointService;
-            }
-
-            targetWrapperFunction.prototype = original.prototype;
-
-            return targetWrapperFunction;
-        } else {
-            throw new Error('Decorated class not extend EndPoint service');
-        }
+        return target;
     }
 }
