@@ -10,7 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/rxst/sorfe.git"
   },
-  "keywords": ["electron", "IPC", "API", "sorfe"],
+  "keywords": [
+    "electron",
+    "IPC",
+    "API",
+    "sorfe"
+  ],
   "author": "rxst",
   "license": "ISC",
   "bugs": {
@@ -27,7 +32,8 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "@types/node": "^14.0.23"
+    "@types/node": "^14.0.23",
+    "jest": "^26.4.2"
   },
   "files": [
     "./lib/index.js",
