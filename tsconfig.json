@@ -19,5 +19,9 @@
   "exclude": [
     "node_modules",
     "lib"
+  ],
+  "types": [
+    "jest",
+    "node"
   ]
 }

@@ -4,7 +4,7 @@ export interface IEndPointOptions {
     name: string;
 }
 
-export function EndPoint(options: IEndPointOptions) {
+export function EndPoint(options: IEndPointOptions): MethodDecorator {
     return function (target: any): any | void {
 
         if (target.prototype instanceof EventEmitter) throw Error('EndPoint decorator can`t work with Event Emitter class');

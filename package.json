@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/rxst/sorfe#readme",
   "dependencies": {
+    "@babel/preset-typescript": "^7.10.4",
     "@types/uuid": "^8.3.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
@@ -32,7 +33,12 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@types/jest": "^26.0.13",
     "@types/node": "^14.0.23",
+    "babel-jest": "^26.3.0",
+    "babel-plugin-transform-decorators": "^6.24.1",
     "jest": "^26.4.2"
   },
   "files": [
