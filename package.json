@@ -1,16 +1,20 @@
 {
   "name": "sorfe",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "",
-  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf lib && tsc --build --force"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rxst/sorfe.git"
   },
-  "keywords": ["electron", "IPC", "API", "sorfe"],
+  "keywords": [
+    "electron",
+    "IPC",
+    "API",
+    "sorfe"
+  ],
   "author": "rxst",
   "license": "ISC",
   "bugs": {
@@ -21,16 +25,25 @@
     "@types/uuid": "^8.3.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
-    "electron": "^9.1.0",
+    "electron": "^6.1.7",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.6",
     "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@types/node": "^14.0.23"
   },
+  "devEngines": {
+    "node": "8.x || 9.x || 10.x || 11.x || 12.x || 13.x || 14.x"
+  },
   "files": [
-    "./lib/index.js",
-    "./lib/frontend/index.js"
+    "lib/*/**.js",
+    "lib/*/**.ts",
+    "lib/*.js",
+    "lib/*.ts",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
   ]
 }
