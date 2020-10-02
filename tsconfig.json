@@ -7,11 +7,25 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "moduleResolution": "Node",
-    "target": "ES5",
+    "downlevelIteration": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "target": "es5",
+    "types": [
+      "node"
+    ],
     "outDir": "./lib",
     "declaration": true,
-    "lib": ["ES6", "dom"]
+    "lib": [
+      "es5",
+      "es6",
+      "es7",
+      "es2017",
+      "DOM",
+      "esnext"
+    ]
   },
   "include": [
     "source/**/*"
