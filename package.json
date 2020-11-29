@@ -16,24 +16,24 @@
     "API",
     "sorfe"
   ],
-  "author": "rxst",
+  "author": "d.samborskyi",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rxst/sorfe/issues"
   },
   "homepage": "https://github.com/rxst/sorfe#readme",
   "dependencies": {
-    "@types/uuid": "^8.3.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
-    "electron": "^7.2.4",
+    "electron": "^11.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.6",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.1"
   },
   "devDependencies": {
-    "@types/node": "^14.0.23"
+    "@types/node": "^14.14.10",
+    "@types/uuid": "^8.3.0"
   },
   "devEngines": {
     "node": "8.x || 9.x || 10.x || 11.x || 12.x || 13.x || 14.x"
