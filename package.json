@@ -4,7 +4,8 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "rimraf lib && tsc --build --force"
+    "build": "rimraf lib && tsc --build --force",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -32,8 +33,12 @@
     "uuid": "^8.3.1"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.16",
     "@types/node": "^14.14.10",
-    "@types/uuid": "^8.3.0"
+    "@types/uuid": "^8.3.0",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.0"
   },
   "devEngines": {
     "node": "8.x || 9.x || 10.x || 11.x || 12.x || 13.x || 14.x"
@@ -46,5 +51,9 @@
     "LICENSE",
     "README.md",
     "tsconfig.json"
-  ]
+  ],
+  "jest": {
+    "verbose": true,
+    "preset": "ts-jest"
+  }
 }

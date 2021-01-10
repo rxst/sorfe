@@ -14,7 +14,8 @@
     "moduleResolution": "node",
     "target": "es5",
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "outDir": "./lib",
     "declaration": true,
