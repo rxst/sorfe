@@ -1,4 +1,3 @@
-// TODO: Decorator must to mark a service as executed service
 import { EventEmitter } from "events";
 
 interface IExecutorServiceDecoratorOptions {
