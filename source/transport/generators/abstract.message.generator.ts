@@ -1,5 +1,8 @@
 import { IIterableDataField } from './generator.interfaces';
 
+/**
+ * Service for generation of a messages
+ */
 export abstract class MessageGenerator<T extends IIterableDataField> {
     private data: IIterableDataField = {};
 

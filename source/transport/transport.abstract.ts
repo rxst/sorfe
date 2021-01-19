@@ -5,6 +5,9 @@ import { IResponseReject, IResponseSuccess } from "../validators/interfaces/resp
 import { ValidatorService } from "../validators/validator";
 import { ResponseGenerator } from "./generators/response.generator";
 
+/**
+ * Transport abstract class is class for manage all income messages
+ */
 export abstract class TransportAbstract extends EventEmitter implements ITransport {
     private validator: ValidatorService = new ValidatorService();
     private responseGenerator: ResponseGenerator = new ResponseGenerator();
@@ -71,5 +74,10 @@ export abstract class TransportAbstract extends EventEmitter implements ITranspo
         })
     }
 
+    /**
+     * Function must be implemented for different methods of communications between parts of a solution
+     * @param listener.message - is parameter of message that will be used in service. Must be in JSON RPC 2.0
+     * @param listener.send - method for message send back
+     */
     abstract transportMessageHandler(listener: (message: IRequest, send: (response: IResponseSuccess | IResponseReject) => void) => void): void;
 }
