@@ -8,7 +8,7 @@ export function Method(options: IExecutorMethodDecoratorOptions) {
             descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
         }
 
-        if (descriptor) {
+        if (descriptor && descriptor.value instanceof Function) {
             descriptor.value.prototype.__isSorfeMethod = true;
             descriptor.value.prototype.__sorfeMethodName = options.name;
         }
