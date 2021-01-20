@@ -8,8 +8,10 @@ export function Service(options: IExecutorServiceDecoratorOptions): ClassDecorat
     return (target) => {
         if (target.prototype instanceof EventEmitter) throw Error('EndPoint decorator can`t work with Event Emitter class');
 
-        target.prototype.__isSorfeService = true;
-        target.prototype.__sorfeServiceName = options.name;
+        if (!!target && target.prototype) {
+            target.prototype.__isSorfeService = true;
+            target.prototype.__sorfeServiceName = options.name;
+        }
 
         return target;
     }
