@@ -3,6 +3,11 @@ import { TransportAbstract } from "../transport/transport.abstract";
 import { ExecutorService } from "../executor/executor.service";
 import { RequestData, RequestSend, TRANSPORT_EVENTS } from "../transport/interfaces/transport.interface";
 
+/**
+ *  Sorfe is main class for server side of API
+ *  @param options.services - Services market by decorator with decorated methods, all services have unique name and created once
+ *  @param options.transport - Specified class for transport messages
+ */
 export class Sorfe<T extends TransportAbstract> {
     private readonly _transport: T;
     private readonly _executor: ExecutorService;
