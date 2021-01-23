@@ -2,7 +2,7 @@ export interface IExecutor {
     call: <T>(service: string, method: string, ...params: any[]) => Promise<T>
 }
 
-interface Class<T> {
+export interface Class<T> {
     new (...args: any[]): T;
     prototype: T;
 }

@@ -4,11 +4,14 @@ export enum TRANSPORT_EVENTS {
     REQUEST = 'request'
 }
 
-export interface ITransport extends EventEmitter {
-    on(event: TRANSPORT_EVENTS.REQUEST, listener: (send: (err: Error, data: any) => void, ...args: any[]) => void): this;
-    emit(event: TRANSPORT_EVENTS.REQUEST, send: (err: Error, data: any) => void, ...args: any[]): boolean;
+export type RequestSend = (err: Error | null, data: any) => void;
+export type RequestData = {
+    service: string;
+    method: string;
+    params: any[]
 }
 
-export interface ITransportRequestHandler extends EventEmitter {
-
+export interface ITransport extends EventEmitter {
+    on(event: TRANSPORT_EVENTS.REQUEST, listener: (send: RequestSend, request: RequestData) => void): this;
+    emit(event: TRANSPORT_EVENTS.REQUEST, send: RequestSend, request: RequestData): boolean;
 }
