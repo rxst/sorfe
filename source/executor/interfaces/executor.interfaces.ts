@@ -1,16 +1,16 @@
-import { ClassType } from "class-transformer/ClassTransformer";
-
 export interface IExecutor {
     call: <T>(service: string, method: string, ...params: any[]) => Promise<T>
 }
 
+interface Class<T> {
+    new (...args: any[]): T;
+    prototype: T;
+}
+
 export  interface ICommonClass {
     [key: string]: any;
-
-    '__proto__': any,
-    prototype: any
 }
 
 export interface IExecutorServiceOptions {
-    services: ClassType<ICommonClass>[],
+    services: Class<ICommonClass>[],
 }
