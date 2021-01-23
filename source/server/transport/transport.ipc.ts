@@ -1,6 +1,6 @@
 import { TransportAbstract } from "./transport.abstract";
-import { IResponseReject, IResponseSuccess } from "../validators/interfaces/response.interfaces";
-import { IRequest } from "../validators/interfaces/request.interfaces";
+import { IResponseReject, IResponseSuccess } from "../../validators/interfaces/response.interfaces";
+import { IRequest } from "../../validators/interfaces/request.interfaces";
 import { ipcMain, IpcMainEvent } from 'electron';
 
 export class TransportIpc extends TransportAbstract {

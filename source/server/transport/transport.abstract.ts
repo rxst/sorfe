@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
 import { ITransport, TRANSPORT_EVENTS } from "./interfaces/transport.interface";
-import { IRequest } from "../validators/interfaces/request.interfaces";
-import { IResponseReject, IResponseSuccess } from "../validators/interfaces/response.interfaces";
-import { ValidatorService } from "../validators/validator";
+import { IRequest } from "../../validators/interfaces/request.interfaces";
+import { IResponseReject, IResponseSuccess } from "../../validators/interfaces/response.interfaces";
+import { ValidatorService } from "../../validators/validator";
 import { ResponseGenerator } from "./generators/response.generator";
 
 /**

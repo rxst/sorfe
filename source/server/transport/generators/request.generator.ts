@@ -1,7 +1,7 @@
 import { MessageGenerator } from "./abstract.message.generator";
-import { IRequest } from "../../validators/interfaces/request.interfaces";
+import { IRequest } from "../../../validators/interfaces/request.interfaces";
 import { IIterableDataField } from "./generator.interfaces";
-import { ValidatorService } from "../../validators/validator";
+import { ValidatorService } from "../../../validators/validator";
 
 export class RequestGenerator extends MessageGenerator<IRequest> {
     private validator: ValidatorService = new ValidatorService()

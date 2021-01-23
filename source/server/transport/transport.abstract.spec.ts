@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { TransportAbstract } from './transport.abstract';
-import { IRequest } from "../validators/interfaces/request.interfaces";
-import { IResponseReject, IResponseSuccess } from "../validators/interfaces/response.interfaces";
+import { IRequest } from "../../validators/interfaces/request.interfaces";
+import { IResponseReject, IResponseSuccess } from "../../validators/interfaces/response.interfaces";
 import { EventEmitter } from "events";
-import { ValidatorService } from "../validators/validator";
+import { ValidatorService } from "../../validators/validator";
 import { TRANSPORT_EVENTS } from "./interfaces/transport.interface";
 
 interface IErrorTypes {
