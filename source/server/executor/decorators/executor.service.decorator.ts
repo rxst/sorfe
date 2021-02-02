@@ -1,4 +1,5 @@
-import { EventEmitter } from "events";
+import 'reflect-metadata'
+import { IPC_MESSENGER_SERVICE_NAME, IS_IPC_MESSENGER_SERVICE } from "../interfaces/executor.interfaces";
 
 interface IExecutorServiceDecoratorOptions {
     name: string
@@ -6,12 +7,9 @@ interface IExecutorServiceDecoratorOptions {
 
 export function Service(options: IExecutorServiceDecoratorOptions): ClassDecorator {
     return (target) => {
-        if (target.prototype instanceof EventEmitter) throw Error('EndPoint decorator can`t work with Event Emitter class');
 
-        if (!!target && target.prototype) {
-            target.prototype.__isSorfeService = true;
-            target.prototype.__sorfeServiceName = options.name;
-        }
+        Reflect.defineMetadata(IS_IPC_MESSENGER_SERVICE, true, target, "class");
+        Reflect.defineMetadata(IPC_MESSENGER_SERVICE_NAME, options.name, target, "class");
 
         return target;
     }

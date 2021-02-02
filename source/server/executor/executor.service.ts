@@ -1,4 +1,9 @@
-import { IExecutor, IExecutorServiceOptions } from "./interfaces/executor.interfaces";
+import {
+    IExecutor,
+    IExecutorServiceOptions,
+    IPC_MESSENGER_SERVICE_NAME,
+    IS_IPC_MESSENGER_SERVICE
+} from "./interfaces/executor.interfaces";
 import { ExecutorEndpoint } from "./endpoint/executor.endpoint";
 
 /**
@@ -14,11 +19,11 @@ export class ExecutorService implements IExecutor {
     constructor(options: IExecutorServiceOptions) {
         options.services
             .map(c => new c())
-            .filter(initClass => !!initClass && !!initClass.__proto__ && !!initClass.__proto__.__isSorfeService && !!initClass.__proto__.__sorfeServiceName)
+            .filter(initClass => !!initClass && !!initClass.__proto__ && !!Reflect.getMetadata(IS_IPC_MESSENGER_SERVICE, initClass.constructor, "class") && !!Reflect.getMetadata(IPC_MESSENGER_SERVICE_NAME, initClass.constructor, "class"))
             .forEach(endPoint => {
-                const serviceName = endPoint.__proto__.__sorfeServiceName;
+                const serviceName = Reflect.getMetadata(IPC_MESSENGER_SERVICE_NAME, endPoint.constructor, "class");
 
-                if (!!this._endpoints.get(serviceName)) throw new Error(`Service ${serviceName} is already created`);
+                if (!!this._endpoints.get(serviceName)) throw new Error(`Service ${ serviceName } is already created`);
 
                 this._endpoints.set(serviceName, new ExecutorEndpoint(endPoint));
             })
@@ -36,8 +41,12 @@ export class ExecutorService implements IExecutor {
         if (endpoint) {
             return endpoint.call<T>(method, ...params)
         } else {
-            throw new Error(`Service ${service} not registered as Endpoint`);
+            throw new Error(`Service ${ service } not registered as Endpoint`);
         }
 
+    }
+
+    public async stop(): Promise<void> {
+        this._endpoints.forEach(value => value)
     }
 }

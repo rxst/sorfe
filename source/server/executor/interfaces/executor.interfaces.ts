@@ -14,3 +14,6 @@ export  interface ICommonClass {
 export interface IExecutorServiceOptions {
     services: Class<ICommonClass>[],
 }
+
+export const IS_IPC_MESSENGER_SERVICE = 'IPC_MessengerService';
+export const IPC_MESSENGER_SERVICE_NAME = 'IPC_MessengerService_Name';

@@ -34,20 +34,32 @@ export class Sorfe<T extends Transport> {
     constructor(private transport: T) {
     }
 
+
+    /**
+     * Method create request and wait response from transport. After response validate him and return value or error if response was with error
+     * @param service - callable service
+     * @param method - callable method
+     * @param params - parameters for method
+     */
     public send<T>(service: string, method: string, ...params: any[]): Promise<T> {
         return new Promise<T>((async (resolve, reject) => {
-            const response = await this.validator.validateResponse(await this.transport.send(await this.getRequest(service, method, params)));
-            if (response) {
-                if ("error" in response) {
-                    reject(response.error);
-                }
+            try {
+                const response = await this.validator.validateResponse(await this.transport.send(await this.getRequest(service, method, params)));
+                if (response) {
+                    if ("error" in response) {
+                        reject(response.error);
+                    }
 
-                if ("result" in response) {
-                    resolve(response.result);
+                    if ("result" in response) {
+                        resolve(response.result);
+                    }
+                } else {
+                    reject(new Error('Message has not valid type'));
                 }
-            } else {
-                reject(new Error('Message has not valid type'));
+            } catch (e) {
+                reject(e)
             }
+
         }))
     }
 }

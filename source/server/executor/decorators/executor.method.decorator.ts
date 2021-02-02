@@ -1,17 +1,14 @@
+import "reflect-metadata";
+
 interface IExecutorMethodDecoratorOptions {
     name: string
 }
 
 export function Method(options: IExecutorMethodDecoratorOptions) {
-    return (target: Object, propertyKey: string, descriptor: PropertyDescriptor | undefined) => {
-        if(descriptor === undefined) {
-            descriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
-        }
+    return (target: Record<string, any>, propertyKey: string, descriptor: PropertyDescriptor | undefined) => {
 
-        if (descriptor && descriptor.value instanceof Function) {
-            descriptor.value.prototype.__isSorfeMethod = true;
-            descriptor.value.prototype.__sorfeMethodName = options.name;
-        }
+        Reflect.defineMetadata('__isIPCMessengerMethod', true, descriptor?.value);
+        Reflect.defineMetadata('__IPCMessengerMethodName', options.name, descriptor?.value);
 
         return descriptor;
     };
