@@ -47,6 +47,6 @@ export class ExecutorService implements IExecutor {
     }
 
     public async stop(): Promise<void> {
-        this._endpoints.forEach(value => value)
+        this._endpoints.forEach(value => value.stop())
     }
 }
