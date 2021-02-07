@@ -1,3 +1,4 @@
+import { rejects } from 'assert';
 import { IpcService } from './ipc.service';
 
 interface ICommonClass {
@@ -27,7 +28,7 @@ export class EndPointAPI {
     }
 
     private mapEndPointMethods<T extends ICommonClass>(inputClass: T): { originalName: string, endPointName: string }[] {
-        const methods = Object.keys(inputClass.__proto__).map(key => ({key, value: inputClass.__proto__[key]}));
+        const methods = Object.keys(inputClass.__proto__).map(key => ({ key, value: inputClass.__proto__[key] }));
         const endPointMethods = methods.filter(method => method.value && method.value.prototype && method.value.prototype.isSorfeEndPoint);
         return endPointMethods.map(method => ({
             originalName: method.key,
@@ -82,19 +83,30 @@ export class EndPointAPI {
         const serviceName = callStr.slice(0, callStr.indexOf(':'));
         const methodName = callStr.slice(callStr.indexOf(':') + 1);
         const serviceMap = this.services.get(serviceName);
-        const originalMethodName = serviceMap.get(methodName);
-        if (!!serviceMap && !!originalMethodName) {
-            try {
-                return new Promise(resolve => {
-                    const calledService = this.endpoints.get(serviceName);
-                    const calledMethod = calledService.__proto__[originalMethodName];
-                    resolve(calledMethod.apply(calledService, ...param));
-                })
-            } catch (e) {
-                return Promise.reject(e);
+        if (serviceMap) {
+            const originalMethodName = serviceMap.get(methodName);
+
+            if (!!serviceMap && !!originalMethodName) {
+                try {
+                    return new Promise((resolve, reject) => {
+                        const calledService = this.endpoints.get(serviceName);
+                        if (calledService) {
+                            const calledMethod = calledService.__proto__[originalMethodName];
+                            resolve(calledMethod.apply(calledService, ...param));
+                        } else {
+                            reject(new Error(`No such service!`))
+                        }
+
+                    })
+                } catch (e) {
+                    return Promise.reject(e);
+                }
+            } else {
+                return Promise.reject(`No such service or method!`);
             }
         } else {
-            return Promise.reject(`No such service or method!`);
+            return Promise.reject(`No such service!`);
         }
+
     }
 }

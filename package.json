@@ -1,10 +1,10 @@
 {
   "name": "sorfe",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf lib && tsc --build --force"
   },
   "repository": {
     "type": "git",
@@ -27,8 +27,9 @@
     "@types/uuid": "^8.3.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
-    "electron": "^9.1.0",
+    "electron": "^7.2.4",
     "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.6",
     "uuid": "^8.3.0"
   },
@@ -41,8 +42,16 @@
     "babel-plugin-transform-decorators": "^6.24.1",
     "jest": "^26.4.2"
   },
+  "devEngines": {
+    "node": "8.x || 9.x || 10.x || 11.x || 12.x || 13.x || 14.x"
+  },
   "files": [
-    "./lib/index.js",
-    "./lib/frontend/index.js"
+    "lib/*/**.js",
+    "lib/*/**.ts",
+    "lib/*.js",
+    "lib/*.ts",
+    "LICENSE",
+    "README.md",
+    "tsconfig.json"
   ]
 }
