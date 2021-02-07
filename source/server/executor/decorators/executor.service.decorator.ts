@@ -5,6 +5,9 @@ interface IExecutorServiceDecoratorOptions {
     name: string
 }
 
+/**
+ * Decorator for endpoint service
+ */
 export function Service(options: IExecutorServiceDecoratorOptions): ClassDecorator {
     return (target) => {
 
