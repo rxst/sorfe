@@ -24,8 +24,32 @@ class TransportTestImpl implements Transport {
 
 }
 
+
 describe("Client service", () => {
-    test('Create with Transport impl', () => {
-        expect(new Sorfe(new TransportTestImpl)).toBeDefined()
+    describe('Creation', () => {
+        test('with transport', () => {
+            expect(new Sorfe(new TransportTestImpl())).toBeDefined();
+        })
+    })
+
+    describe('Data flow', () => {
+        let transport: TransportTestImpl;
+        let sorfe: Sorfe<TransportTestImpl>;
+
+        beforeAll(() => {
+            transport = new TransportTestImpl();
+            sorfe = new Sorfe<TransportTestImpl>(transport);
+        })
+
+
+        test('with resolve', () => {
+            transport.isSuccess = true;
+            expect(sorfe.send('test', 'test', [])).resolves.toBeDefined();
+        })
+
+        test('with reject', () => {
+            transport.isSuccess = false;
+            expect(sorfe.send('test', 'test', [])).rejects.toBeDefined();
+        })
     })
 })
